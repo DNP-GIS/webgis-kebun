@@ -1,7 +1,7 @@
 // Label Code — ubah di sini saja
 const CODE_LABELS={"1":"Dikerjakan Bulan Ini","0":"Bulan Sebelumnya"};
 const CODE_COLORS={"1":"#ff1744","0":"#ffc107"};
-const DATA_URL='data/land_clearing.geojson';
+const DATA_URL='data/land_clearing.geojson?v=202611041834';
 const BLN=['Jan','Feb','Mar','Apr','Mei','Jun','Jul','Agu','Sep','Okt','Nov','Des'];
 const osm=L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19,attribution:'&copy; OpenStreetMap'});
 const sat=L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',{maxZoom:19,attribution:'Esri World Imagery'});
