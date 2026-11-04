@@ -1,6 +1,6 @@
 *{box-sizing:border-box}body{margin:0;font-family:system-ui,sans-serif}
 header{height:50px;background:#1b5e20;color:#fff;display:flex;align-items:center;gap:10px;padding:0 12px}
-header h1{font-size:18px;margin:0}.badge{background:#ffb300;color:#000;padding:2px 8px;border-radius:10px;font-size:12px}
+header h1{font-size:18px;margin:0}.sub{background:#fff3;padding:2px 8px;border-radius:10px;font-size:13px}
 #toggle{display:none;background:none;border:0;color:#fff;font-size:22px}
 #panel{position:absolute;top:50px;left:0;bottom:0;width:300px;overflow:auto;padding:12px;background:#fafafa;border-right:1px solid #ddd;z-index:1000}
 #map{position:absolute;top:50px;left:300px;right:0;bottom:0}
@@ -10,3 +10,4 @@ select,input{width:100%;padding:5px;margin-top:2px}
 .legend{background:#fff;padding:8px;border-radius:4px;font-size:12px;line-height:18px}.legend i{display:inline-block;width:14px;height:14px;margin-right:5px;vertical-align:middle}
 .note{font-size:12px;color:#b71c1c}.big{font-size:22px;font-weight:bold}
 @media(max-width:700px){#toggle{display:block}#panel{width:85%;transform:translateX(-100%);transition:.3s}#panel.open{transform:none}#map{left:0}header h1{font-size:15px}}
+#reset{margin-top:6px;padding:5px 10px}.row{display:flex;justify-content:space-between;font-size:13px}
