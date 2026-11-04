@@ -1,0 +1,16 @@
+<!DOCTYPE html><html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Web GIS Monitoring Kebun</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<link rel="stylesheet" href="css/style.css"></head><body>
+<header><button id="toggle">☰</button><h1>Web GIS Monitoring Kebun</h1><span class="badge">Data Contoh</span></header>
+<aside id="panel">
+<h2>Ringkasan</h2><div id="summary"></div>
+<h2>Filter</h2>
+<label>Afdeling<select id="fAfd"><option value="">Semua</option></select></label>
+<label>Status<select id="fSt"><option value="">Semua</option><option>Belum Mulai</option><option>Proses</option><option>Selesai</option></select></label>
+<label>Cari Blok<input id="q" placeholder="mis. A01"></label>
+<h2>Progres per Afdeling</h2><div id="perAfd"></div>
+<p class="note">⚠️ Semua data adalah DATA CONTOH, bukan data riil.</p>
+</aside><div id="map"></div>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="js/app.js"></script></body></html>
