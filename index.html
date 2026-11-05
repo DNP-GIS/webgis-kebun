@@ -1,21 +1,48 @@
 <!DOCTYPE html><html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Web GIS Monitoring Kebun – Land Clearing</title>
+<title>Web GIS Monitoring Kebun Spartan – PT Dwi Nagarta Palma</title>
+<meta name="theme-color" content="#0f3d2e"><link rel="icon" href="data:,">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap">
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
-<link rel="stylesheet" href="css/style.css?v=202611050206"></head><body>
-<header><button id="toggle">☰</button><h1>PETA SITUASI KEBUN SPARTAN - PT DWI NAGARTA PALMA</h1><span class="sub">Land Clearing Oct 2026</span></header>
+<link rel="stylesheet" href="css/style.css?v=202611050910"></head><body>
+<header id="appbar">
+ <button id="toggle" class="icon-btn" title="Tampilkan / sembunyikan panel" aria-label="Panel"><svg viewBox="0 0 24 24" width="20" height="20"><path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
+ <div class="brand">
+  <svg class="logo" viewBox="0 0 48 48" aria-hidden="true"><rect x="1" y="1" width="46" height="46" rx="12" fill="#f2b632"/><rect x="4" y="4" width="40" height="40" rx="9" fill="#0f3d2e"/><text x="24" y="29.5" text-anchor="middle" font-family="Plus Jakarta Sans,Arial,sans-serif" font-weight="800" font-size="14" fill="#f2b632" letter-spacing=".5">DNP</text></svg>
+  <div class="brand-txt"><h1>PT DWI NAGARTA PALMA</h1><div class="brand-sub">Kebun Spartan · Web GIS Monitoring</div></div>
+ </div>
+ <div class="map-title" title="Judul peta">PETA SITUASI KEBUN SPARTAN - PT DWI NAGARTA PALMA</div>
+ <div class="hdr-right">
+  <span class="chip chip-gold" id="periode">Periode: –</span>
+  <span class="hdr-upd"><span class="dot"></span>Update data: <b id="lastUpd">–</b></span>
+  <button id="printBtn" class="btn-ghost" title="Cetak peta (Ctrl+P)"><svg viewBox="0 0 24 24" width="16" height="16"><path d="M6 9V3h12v6M6 18H4a1 1 0 0 1-1-1v-6a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v6a1 1 0 0 1-1 1h-2M6 14h12v7H6z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg><span>Cetak</span></button>
+ </div>
+</header>
 <aside id="panel">
-<h2>Ringkasan</h2><div id="summary"></div>
-<h2>Filter</h2>
-<label>Code<select id="fCode"><option value="">Semua</option></select></label>
-<label>Pengerjaan (Alat)<select id="fPeng"><option value="">Semua</option></select></label>
-<label>Operator<select id="fOp"><option value="">Semua</option></select></label>
-<label>Tanggal dari<input type="date" id="fFrom"></label>
-<label>Tanggal sampai<input type="date" id="fTo"></label>
-<button id="reset">Reset Filter</button>
-<h2>Luas per Code</h2><div id="perCode"></div>
-<h2>Luas per Pengerjaan (Alat)</h2><div id="perPeng"></div>
-<h2>Luas per Operator</h2><div id="perOp"></div>
-<h2>Luas per Tanggal</h2><div id="perTgl"></div>
-</aside><div id="map"></div>
+ <details class="sec" open><summary>Ringkasan</summary><div class="sec-body"><div id="summary"></div></div></details>
+ <details class="sec" open><summary>Filter Data <span class="badge" id="fCount" hidden></span></summary><div class="sec-body filters">
+  <label>Code<select id="fCode"><option value="">Semua</option></select></label>
+  <label>Pengerjaan (Alat)<select id="fPeng"><option value="">Semua</option></select></label>
+  <label>Operator<select id="fOp"><option value="">Semua</option></select></label>
+  <div class="two"><label>Tanggal dari<input type="date" id="fFrom"></label><label>Tanggal sampai<input type="date" id="fTo"></label></div>
+  <button id="reset" class="btn-sec"><svg viewBox="0 0 24 24" width="14" height="14"><path d="M4 4v6h6M20 20v-6h-6M5.5 15a7 7 0 0 0 12.3 2M18.5 9A7 7 0 0 0 6.2 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>Reset Filter</button>
+ </div></details>
+ <details class="sec" open><summary>Statistik Land Clearing</summary><div class="sec-body">
+  <h3>Luas per Code</h3><div id="perCode"></div>
+  <h3>Luas per Pengerjaan (Alat)</h3><div id="perPeng"></div>
+  <h3>Luas per Operator</h3><div id="perOp"></div>
+  <h3>Luas per Tanggal</h3><div id="perTgl"></div>
+ </div></details>
+</aside>
+<section id="kpis" aria-label="Indikator utama">
+ <div class="kpi kpi-hero"><div class="kpi-ic"><svg viewBox="0 0 24 24"><path d="M3 20h18M5 20V9l7-5 7 5v11M9 20v-6h6v6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg></div><div><div class="kpi-l">Total Land Clearing</div><div class="kpi-v"><span id="kTot">–</span><small>ha</small></div><div class="kpi-s" id="kTotS">&nbsp;</div></div></div>
+ <div class="kpi"><div class="kpi-ic ic-gold"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M3 10h18M8 3v4M16 3v4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></div><div><div class="kpi-l" id="kOctL">LC Bulan Berjalan</div><div class="kpi-v"><span id="kOct">–</span><small>ha</small></div><div class="kpi-s" id="kOctS">&nbsp;</div></div></div>
+ <div class="kpi"><div class="kpi-ic"><svg viewBox="0 0 24 24"><path d="M4 6l5-2 6 2 5-2v14l-5 2-6-2-5 2z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M9 4v14M15 6v14" stroke="currentColor" stroke-width="1.8"/></svg></div><div><div class="kpi-l">Luas Batas Kebun</div><div class="kpi-v"><span id="kBatas">–</span><small>ha</small></div><div class="kpi-s">Batas Kebun DNP</div></div></div>
+ <div class="kpi"><div class="kpi-ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M12 3.5V12l6 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></div><div><div class="kpi-l" title="% Land Clearing terhadap Luas Batas Kebun">% LC / Batas Kebun</div><div class="kpi-v"><span id="kPct">–</span><small>%</small></div><div class="kpi-prog"><div id="kPctBar"></div></div></div></div>
+ <div class="kpi"><div class="kpi-ic"><svg viewBox="0 0 24 24"><path d="M4 4h7v7H4zM13 4h7v7h-7zM4 13h7v7H4zM13 13h7v7h-7z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg></div><div><div class="kpi-l">Jumlah Blok</div><div class="kpi-v"><span id="kBlok">–</span><small>blok</small></div><div class="kpi-s" id="kBlokS">&nbsp;</div></div></div>
+</section>
+<div id="map"></div>
+<footer id="statusbar"><span class="copy">© 2026 PT Dwi Nagarta Palma · Data: Divisi GIS</span><span class="coords"><span id="cLL">Lat –, Lng –</span><span id="cUTM"></span><span id="cZ"></span></span></footer>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-<script src="js/app.js?v=202611050206"></script></body></html>
+<script src="https://cdn.jsdelivr.net/npm/proj4@2.12.1/dist/proj4.js"></script>
+<script src="js/app.js?v=202611050910"></script></body></html>
